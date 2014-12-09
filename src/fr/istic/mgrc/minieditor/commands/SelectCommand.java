@@ -25,7 +25,7 @@ public class SelectCommand extends MacroCompatibleCommand {
 
     @Override
     public CommandMemento saveToMemento() {
-        return new SelectCommandMemento(editor, start - editor.getSelection().getStart(), end - editor.getSelection().getEnd());
+        return new SelectCommandMemento(editor, start - editor.getSelection().getStart(), end - editor.getSelection().getStart());
     }
 
     @Override

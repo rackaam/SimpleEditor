@@ -65,7 +65,7 @@ public class ConcreteMiniEditor implements MiniEditor {
         if (end > buffer.length())
             end = buffer.length();
         if (start > end)
-            throw new IllegalArgumentException("The End value must be greater or equal to the Start value");
+            throw new IllegalArgumentException("The End value must be greater or equal to the Start value:" + start + "/" + end);
         selection.set(start, end);
         notifyObservers();
     }
