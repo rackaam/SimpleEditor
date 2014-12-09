@@ -79,20 +79,7 @@ public class EditorGUI extends Application implements Observer {
                         return null;
                     }
 
-                    // Keyboard Selection
-                    if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED && keyEvent.isShiftDown() &&
-                            (keyEvent.getCode() == KeyCode.LEFT
-                                    || keyEvent.getCode() == KeyCode.RIGHT
-                                    || keyEvent.getCode() == KeyCode.UP
-                                    || keyEvent.getCode() == KeyCode.DOWN)) {
-                        defaultDispatcher.dispatchEvent(event, eventDispatchChain);
-                        Command selectCommand = new SelectCommand(editor, textArea.getSelection().getStart(),
-                                textArea.getSelection().getEnd());
-                        selectCommand.execute();
-                        return null;
-                    }
-
-                    // Caret position
+                    // Caret position / Selection
                     if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED &&
                             (keyEvent.getCode() == KeyCode.LEFT
                                     || keyEvent.getCode() == KeyCode.RIGHT
