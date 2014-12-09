@@ -15,6 +15,12 @@ public class ConcreteMiniEditor implements MiniEditor {
     private StringBuffer buffer = new StringBuffer();
     private String clipboard = null;
     private Selection selection = new Selection();
+    private MacroRecorder macroRecorder = new MacroRecorder();
+
+
+    public MacroRecorder getMacroRecorder() {
+        return macroRecorder;
+    }
 
     @Override
     public String getBuffer() {
@@ -98,17 +104,17 @@ public class ConcreteMiniEditor implements MiniEditor {
 
     @Override
     public void startRecording() {
-        throw new UnsupportedOperationException("v2 feature");
+        macroRecorder.startRecording();
     }
 
     @Override
     public void endRecording() {
-        throw new UnsupportedOperationException("v2 feature");
+        macroRecorder.stopRecording();
     }
 
     @Override
     public void playRecording() {
-        throw new UnsupportedOperationException("v2 feature");
+        macroRecorder.play();
     }
 
     @Override
@@ -138,7 +144,8 @@ public class ConcreteMiniEditor implements MiniEditor {
     public String toString() {
         return "###Buffer:\n" + buffer.toString() + "\n"
                 + "###Clipboard:\n" + clipboard + "\n"
-                + "###Selection: " + selection.getStart() + "-" + selection.getEnd() + " length: " + selection.getLength() + "\n";
+                + "###Selection: " + selection.getStart() + "-" + selection.getEnd() + " length: " + selection.getLength() + "\n"
+                + "###Macro Recorder: " + (macroRecorder.isRecording() ? "ON" : "OFF") + "\n";
     }
 
     /**

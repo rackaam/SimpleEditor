@@ -6,6 +6,9 @@ public abstract class EditorCommand implements Command {
 
     protected MiniEditor editor;
 
+    public EditorCommand() {
+    }
+
     public EditorCommand(MiniEditor editor) {
         this.editor = editor;
     }

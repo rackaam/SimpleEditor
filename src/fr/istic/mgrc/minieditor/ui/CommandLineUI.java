@@ -20,6 +20,9 @@ public class CommandLineUI {
     private static final String CUT_REGEX = "cut";
     private static final String PASTE_REGEX = "paste";
     private static final String DELETE_REGEX = "delete";
+    private static final String START_RECORD_REGEX = "start rec";
+    private static final String STOP_RECORD_REGEX = "stop rec";
+    private static final String PLAY_REGEX = "play";
 
     private MiniEditor editor;
 
@@ -60,6 +63,12 @@ public class CommandLineUI {
             paste();
         else if (input.matches(DELETE_REGEX))
             delete();
+        else if (input.matches(START_RECORD_REGEX))
+            startRecording();
+        else if (input.matches(STOP_RECORD_REGEX))
+            stopRecording();
+        else if (input.matches(PLAY_REGEX))
+            playMacro();
         printEditor();
         waitForInput();
     }
@@ -137,6 +146,21 @@ public class CommandLineUI {
     private void paste() {
         Command pasteCommand = new PasteCommand(editor);
         pasteCommand.execute();
+    }
+
+    private void startRecording() {
+        StartRecCommand command = new StartRecCommand(editor);
+        command.execute();
+    }
+
+    private void stopRecording() {
+        StopRecCommand command = new StopRecCommand(editor);
+        command.execute();
+    }
+
+    private void playMacro() {
+        PlayCommand command = new PlayCommand(editor);
+        command.execute();
     }
 
     /**
