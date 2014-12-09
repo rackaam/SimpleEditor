@@ -62,6 +62,10 @@ public class ConcreteMiniEditor implements MiniEditor {
     public void select(int start, int end) {
         if (start < 0)
             start = 0;
+        if (start > buffer.length())
+            start = buffer.length();
+        if (end < 0)
+            end = 0;
         if (end > buffer.length())
             end = buffer.length();
         if (start > end)
