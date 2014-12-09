@@ -57,6 +57,18 @@ public class EditorGUI extends Application implements Observer {
                                     Command pasteCommand = new PasteCommand(editor);
                                     pasteCommand.execute();
                                     break;
+                                case R://start record macro
+                                    Command startRecord = new StartRecCommand(editor);
+                                    startRecord.execute();
+                                    break;
+                                case S://stop record
+                                    Command stopRecord = new StopRecCommand(editor);
+                                    stopRecord.execute();
+                                    break;
+                                case P://Play a macro
+                                    Command playCommand = new PlayCommand(editor);
+                                    playCommand.execute();
+                                    break;
                                 default:
                                     break;
                             }

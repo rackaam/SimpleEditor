@@ -33,6 +33,8 @@ public class MacroRecorder {
     }
 
     public void play() {
+        if (isRecording)
+            return;
         for (int i = 0; i < commands.size(); i++) {
             try {
                 MacroCompatibleCommand command = commands.get(i).newInstance();
