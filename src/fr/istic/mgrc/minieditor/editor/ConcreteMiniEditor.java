@@ -138,7 +138,7 @@ public class ConcreteMiniEditor implements MiniEditor {
     public String toString() {
         return "###Buffer:\n" + buffer.toString() + "\n"
                 + "###Clipboard:\n" + clipboard + "\n"
-                + "###Selection: " + selection.getStart() + "-" + selection.getEnd() + "\n";
+                + "###Selection: " + selection.getStart() + "-" + selection.getEnd() + " length: " + selection.getLength() + "\n";
     }
 
     /**
