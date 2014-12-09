@@ -5,6 +5,10 @@ import fr.istic.mgrc.minieditor.Observer;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Implémentation de MiniEditor
+ * Documentation des méthodes surchargées dans MiniEditor.java
+ */
 public class ConcreteMiniEditor implements MiniEditor {
 
     private Set<Observer> observers = new HashSet<Observer>();
@@ -15,6 +19,11 @@ public class ConcreteMiniEditor implements MiniEditor {
     @Override
     public String getBuffer() {
         return buffer.toString();
+    }
+
+    @Override
+    public int getBufferLength() {
+        return buffer.length();
     }
 
     @Override
@@ -45,8 +54,10 @@ public class ConcreteMiniEditor implements MiniEditor {
 
     @Override
     public void select(int start, int end) {
-        if (start < 0 || start > buffer.length() || end < 0 || end > buffer.length())
-            throw new IllegalArgumentException("The Start and End values must be between 0 and buffer.length()");
+        if (start < 0)
+            start = 0;
+        if (end > buffer.length())
+            end = buffer.length();
         if (start > end)
             throw new IllegalArgumentException("The End value must be greater or equal to the Start value");
         selection.set(start, end);
@@ -122,11 +133,17 @@ public class ConcreteMiniEditor implements MiniEditor {
         notifyObservers();
     }
 
+
     @Override
     public String toString() {
-        return "Buffer:\n" + buffer.toString();
+        return "###Buffer:\n" + buffer.toString() + "\n"
+                + "###Clipboard:\n" + clipboard + "\n"
+                + "###Selection: " + selection.getStart() + "-" + selection.getEnd() + "\n";
     }
 
+    /**
+     * Notifie les observeurs quand le contenu du buffer change (après un #insert() ou un #delete())
+     */
     @Override
     public void notifyObservers() {
         for (Observer o : observers)
