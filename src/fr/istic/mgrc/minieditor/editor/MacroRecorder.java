@@ -12,29 +12,33 @@ public class MacroRecorder {
     private List<java.lang.Class<? extends MacroCompatibleCommand>> commands = new ArrayList<java.lang.Class<? extends MacroCompatibleCommand>>();
     private List<CommandMemento> commandsStates = new ArrayList<CommandMemento>();
 
+    private List<java.lang.Class<? extends MacroCompatibleCommand>> tempCommands = new ArrayList<java.lang.Class<? extends MacroCompatibleCommand>>();
+    private List<CommandMemento> tempCommandsStates = new ArrayList<CommandMemento>();
 
     public boolean isRecording() {
         return isRecording;
     }
 
     public void startRecording() {
-        commands.clear();
-        commandsStates.clear();
         isRecording = true;
     }
 
     public void stopRecording() {
-        isRecording = false;
+        if (isRecording) {
+            isRecording = false;
+            commands = tempCommands;
+            commandsStates = tempCommandsStates;
+            tempCommands = new ArrayList<java.lang.Class<? extends MacroCompatibleCommand>>();
+            tempCommandsStates = new ArrayList<CommandMemento>();
+        }
     }
 
     public void record(MacroCompatibleCommand command) {
-        commandsStates.add(command.saveToMemento());
-        commands.add(command.getClass());
+        tempCommandsStates.add(command.saveToMemento());
+        tempCommands.add(command.getClass());
     }
 
     public void play() {
-        if (isRecording)
-            return;
         for (int i = 0; i < commands.size(); i++) {
             try {
                 MacroCompatibleCommand command = commands.get(i).newInstance();
