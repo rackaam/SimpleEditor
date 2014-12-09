@@ -11,6 +11,11 @@ public class SelectCommand extends MacroCompatibleCommand {
     public SelectCommand() {
     }
 
+    /**
+     * @param editor
+     * @param start  Index de début de la selection (inclu)
+     * @param end    Index de fin de la selection (exclu)
+     */
     public SelectCommand(MiniEditor editor, int start, int end) {
         super(editor);
         this.start = start;

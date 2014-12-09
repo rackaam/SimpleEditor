@@ -6,12 +6,18 @@ import fr.istic.mgrc.minieditor.commands.mementos.CommandMemento;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Realise l'enregistrement et le lancement de macro
+ * Joue le rôle de Caretaker dans le pattern Memento
+ */
 public class MacroRecorder {
 
     private boolean isRecording;
+    // Sauvegarde du type de class à la place d'une instance de la classe
     private List<java.lang.Class<? extends MacroCompatibleCommand>> commands = new ArrayList<java.lang.Class<? extends MacroCompatibleCommand>>();
     private List<CommandMemento> commandsStates = new ArrayList<CommandMemento>();
 
+    // Utilisaton de temporaires pour permettre l'utilisation de macro pendant l'enregistrement d'une nouvelle macro
     private List<java.lang.Class<? extends MacroCompatibleCommand>> tempCommands = new ArrayList<java.lang.Class<? extends MacroCompatibleCommand>>();
     private List<CommandMemento> tempCommandsStates = new ArrayList<CommandMemento>();
 
