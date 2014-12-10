@@ -16,7 +16,6 @@ public class EditorCaretaker {
         undoStates.clear();
         EditorMemento save = editor.saveToMemento();
         states.push(save);
-        System.out.println(save.getBuffer().toString() + " : " + save.getSelection().getStart() + "/" + save.getSelection().getEnd());
     }
 
     public void undo() {
