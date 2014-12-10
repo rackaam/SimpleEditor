@@ -1,5 +1,6 @@
 package fr.istic.mgrc.minieditor.tests;
 
+import fr.istic.mgrc.minieditor.commands.InsertCommand;
 import fr.istic.mgrc.minieditor.editor.ConcreteMiniEditor;
 import fr.istic.mgrc.minieditor.editor.MiniEditor;
 import fr.istic.mgrc.minieditor.editor.Selection;
@@ -104,6 +105,17 @@ public class ConcreteMiniEditorTest {
         editor.select(2, 5);
         editor.delete();
         assertEquals("azy", editor.getBuffer());
+    }
+
+    @Test
+    public void testPlay() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.startRecording();
+        InsertCommand command = new InsertCommand(editor, "test");
+        command.execute();
+        editor.endRecording();
+        editor.playRecording();
+        assertEquals("testtest", editor.getBuffer());
     }
 
 }
