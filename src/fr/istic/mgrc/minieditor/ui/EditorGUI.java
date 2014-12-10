@@ -69,6 +69,14 @@ public class EditorGUI extends Application implements Observer {
                                     Command playCommand = new PlayCommand(editor);
                                     playCommand.execute();
                                     break;
+                                case Y://Remettre le dernier etat
+                                    Command redoCommand = new RedoCommand(editor);
+                                    redoCommand.execute();
+                                    break;
+                                case Z://Annule derniere commande
+                                    Command undoCommand = new UndoCommand(editor);
+                                    undoCommand.execute();
+                                    break;
                                 default:
                                     break;
                             }

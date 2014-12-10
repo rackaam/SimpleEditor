@@ -55,7 +55,7 @@ public class ConcreteMiniEditor implements MiniEditor {
     @Override
     public void insert(String substring) {
         if (selection.getLength() > 0) {
-            delete();
+            delete(selection.getStart(), selection.getEnd());
         }
         buffer.insert(selection.getStart(), substring);
         int newSelectionStart = selection.getStart() + substring.length();
@@ -93,6 +93,8 @@ public class ConcreteMiniEditor implements MiniEditor {
         if (selection.getLength() > 0) {
             copy();
             delete(selection.getStart(), selection.getEnd());
+            if (!isPlayingMacro)
+                caretaker.save();
         }
     }
 
@@ -131,6 +133,7 @@ public class ConcreteMiniEditor implements MiniEditor {
         isPlayingMacro = true;
         macroRecorder.play();
         isPlayingMacro = false;
+        caretaker.save();
     }
 
     @Override
