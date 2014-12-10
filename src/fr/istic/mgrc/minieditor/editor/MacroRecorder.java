@@ -40,8 +40,10 @@ public class MacroRecorder {
     }
 
     public void record(MacroCompatibleCommand command) {
-        tempCommandsStates.add(command.saveToMemento());
-        tempCommands.add(command.getClass());
+        if (isRecording) {
+            tempCommandsStates.add(command.saveToMemento());
+            tempCommands.add(command.getClass());
+        }
     }
 
     public void play() {
@@ -56,5 +58,13 @@ public class MacroRecorder {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Class<? extends MacroCompatibleCommand>> getCommands() {
+        return commands;
+    }
+
+    public List<CommandMemento> getCommandsStates() {
+        return commandsStates;
     }
 }
