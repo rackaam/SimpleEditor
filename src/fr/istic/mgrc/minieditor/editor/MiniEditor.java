@@ -35,20 +35,23 @@ public interface MiniEditor extends Observable {
 
     /**
      * Renvoie le contenu du clipboard
+     *
      * @return Contenu du clipboard
      */
     public String getClipboard();
 
     /**
      * Insert du texte à la position de Selection.start
+     *
      * @param substring
      */
     public void insert(String substring);
 
     /**
      * Met à jour les index de début et de fin de la sélection
+     *
      * @param start Index de début (inclu)
-     * @param end Index de fin (exclu)
+     * @param end   Index de fin (exclu)
      */
     public void select(int start, int end);
 
