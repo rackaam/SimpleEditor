@@ -12,12 +12,18 @@ public class EditorCaretaker {
         this.editor = editor;
     }
 
+    /**
+     * Sauvegarde l'état du ConcreteMiniEditor
+     */
     public void save() {
         undoStates.clear();
         EditorMemento save = editor.saveToMemento();
         states.push(save);
     }
 
+    /**
+     * Reviens à l'état précédent
+     */
     public void undo() {
         if (states.size() > 1) {
             undoStates.push(states.pop());
@@ -25,6 +31,9 @@ public class EditorCaretaker {
         }
     }
 
+    /**
+     * Annule un #undo()
+     */
     public void redo() {
         if (!undoStates.empty()) {
             EditorMemento memento = undoStates.pop();

@@ -29,6 +29,9 @@ public class MacroRecorder {
         isRecording = true;
     }
 
+    /**
+     * Stop l'enregistrement. La macro précédemment enregistrée devient indisponible
+     */
     public void stopRecording() {
         if (isRecording) {
             isRecording = false;
@@ -39,6 +42,10 @@ public class MacroRecorder {
         }
     }
 
+    /**
+     * Enregistre une nouvelle commande
+     * @param command
+     */
     public void record(MacroCompatibleCommand command) {
         if (isRecording) {
             tempCommandsStates.add(command.saveToMemento());
@@ -46,6 +53,9 @@ public class MacroRecorder {
         }
     }
 
+    /**
+     * Rejoue les commandes enregistrées
+     */
     public void play() {
         for (int i = 0; i < commands.size(); i++) {
             try {

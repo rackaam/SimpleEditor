@@ -204,10 +204,18 @@ public class ConcreteMiniEditor implements MiniEditor {
         observers.remove(observer);
     }
 
+    /**
+     * Sauvegarder l'état de l'editeur (buffer et selection)
+     * @return
+     */
     public EditorMemento saveToMemento() {
         return new EditorMemento(new StringBuffer(buffer), new Selection(selection));
     }
 
+    /**
+     * Restore l'état du buffer et de la selection
+     * @param memento
+     */
     public void restoreFromMemento(EditorMemento memento) {
         buffer = new StringBuffer(memento.getBuffer());
         selection = new Selection(memento.getSelection());
