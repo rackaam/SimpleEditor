@@ -64,5 +64,21 @@ public class Selection {
         return getEnd() - getStart();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Selection)) return false;
+        Selection other = (Selection) obj;
+        if (other.getStart() == start && other.getEnd() == end)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Selection: " + start + "/" + end;
+    }
 }
 

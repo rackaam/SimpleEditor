@@ -26,12 +26,8 @@ public class CommandLineUI {
 
     private MiniEditor editor;
 
-    /**
-     * Instancie l'éditeur et commence la boucle d'entrée de l'utilisateur
-     */
     public CommandLineUI() {
         editor = new ConcreteMiniEditor();
-        waitForInput();
     }
 
     /**
@@ -49,7 +45,15 @@ public class CommandLineUI {
         }
         if (input == null)
             waitForInput();
-        else if (input.matches(INSERT_REGEX))
+        else {
+            newInput(input);
+            printEditor();
+        }
+        waitForInput();
+    }
+
+    public void newInput(String input) {
+        if (input.matches(INSERT_REGEX))
             insert(input);
         else if (input.matches(SELECT_REGEX))
             select(input);
@@ -69,8 +73,6 @@ public class CommandLineUI {
             stopRecording();
         else if (input.matches(PLAY_REGEX))
             playMacro();
-        printEditor();
-        waitForInput();
     }
 
     /**
@@ -170,4 +172,7 @@ public class CommandLineUI {
         System.out.print(editor);
     }
 
+    public MiniEditor getEditor() {
+        return editor;
+    }
 }
