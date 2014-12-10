@@ -16,7 +16,12 @@ public class ConcreteMiniEditor implements MiniEditor {
     private String clipboard = null;
     private Selection selection = new Selection();
     private MacroRecorder macroRecorder = new MacroRecorder();
+    private EditorCaretaker caretaker = new EditorCaretaker(this);
+    private boolean isPlayingMacro;
 
+    public ConcreteMiniEditor() {
+        caretaker.save();
+    }
 
     public MacroRecorder getMacroRecorder() {
         return macroRecorder;
@@ -55,6 +60,8 @@ public class ConcreteMiniEditor implements MiniEditor {
         buffer.insert(selection.getStart(), substring);
         int newSelectionStart = selection.getStart() + substring.length();
         selection.set(newSelectionStart, newSelectionStart);
+        if (!isPlayingMacro)
+            caretaker.save();
         notifyObservers();
     }
 
@@ -105,6 +112,8 @@ public class ConcreteMiniEditor implements MiniEditor {
         } else {
             delete(selection.getStart(), selection.getEnd());
         }
+        if (!isPlayingMacro)
+            caretaker.save();
     }
 
     @Override
@@ -119,17 +128,19 @@ public class ConcreteMiniEditor implements MiniEditor {
 
     @Override
     public void playRecording() {
+        isPlayingMacro = true;
         macroRecorder.play();
+        isPlayingMacro = false;
     }
 
     @Override
     public void undo() {
-        throw new UnsupportedOperationException("v3 feature");
+        caretaker.undo();
     }
 
     @Override
     public void redo() {
-        throw new UnsupportedOperationException("v3 feature");
+        caretaker.redo();
     }
 
     /**
@@ -170,5 +181,15 @@ public class ConcreteMiniEditor implements MiniEditor {
     @Override
     public void unregisterObserver(Observer observer) {
         observers.remove(observer);
+    }
+
+    public EditorMemento saveToMemento() {
+        return new EditorMemento(new StringBuffer(buffer), new Selection(selection));
+    }
+
+    public void restoreFromMemento(EditorMemento memento) {
+        buffer = new StringBuffer(memento.getBuffer());
+        selection = new Selection(memento.getSelection());
+        notifyObservers();
     }
 }

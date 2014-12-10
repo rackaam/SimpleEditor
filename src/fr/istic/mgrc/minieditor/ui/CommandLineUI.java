@@ -23,6 +23,8 @@ public class CommandLineUI {
     private static final String START_RECORD_REGEX = "start rec";
     private static final String STOP_RECORD_REGEX = "stop rec";
     private static final String PLAY_REGEX = "play";
+    private static final String UNDO_REGEX = "undo";
+    private static final String REDO_REGEX = "redo";
 
     private MiniEditor editor;
 
@@ -69,6 +71,10 @@ public class CommandLineUI {
             stopRecording();
         else if (input.matches(PLAY_REGEX))
             playMacro();
+        else if (input.matches(UNDO_REGEX))
+            undo();
+        else if (input.matches(REDO_REGEX))
+            redo();
         printEditor();
         waitForInput();
     }
@@ -160,6 +166,16 @@ public class CommandLineUI {
 
     private void playMacro() {
         PlayCommand command = new PlayCommand(editor);
+        command.execute();
+    }
+
+    private void undo() {
+        UndoCommand command = new UndoCommand(editor);
+        command.execute();
+    }
+
+    private void redo() {
+        RedoCommand command = new RedoCommand(editor);
         command.execute();
     }
 

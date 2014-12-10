@@ -8,6 +8,14 @@ public class Selection {
     private int start;
     private int end;
 
+    public Selection() {
+    }
+
+    public Selection(Selection selection) {
+        this.start = selection.getStart();
+        this.end = selection.getEnd();
+    }
+
     /**
      * Renvoie l'index de début de la selection (inclu)
      *
