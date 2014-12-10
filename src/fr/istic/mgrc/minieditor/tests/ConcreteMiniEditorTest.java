@@ -1,5 +1,6 @@
 package fr.istic.mgrc.minieditor.tests;
 
+import fr.istic.mgrc.minieditor.commands.InsertCommand;
 import fr.istic.mgrc.minieditor.editor.ConcreteMiniEditor;
 import fr.istic.mgrc.minieditor.editor.MiniEditor;
 import fr.istic.mgrc.minieditor.editor.Selection;
@@ -107,6 +108,17 @@ public class ConcreteMiniEditorTest {
     }
 
     @Test
+    public void testPlay() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.startRecording();
+        InsertCommand command = new InsertCommand(editor, "test");
+        command.execute();
+        editor.endRecording();
+        editor.playRecording();
+        assertEquals("testtest", editor.getBuffer());
+    }
+
+    @Test
     public void testUndo() {
         MiniEditor editor = new ConcreteMiniEditor();
         editor.insert("test");
@@ -137,8 +149,8 @@ public class ConcreteMiniEditorTest {
     public void undoMacro() {
         MiniEditor editor = new ConcreteMiniEditor();
         editor.startRecording();
-        editor.insert("test1");
-        editor.insert("test2");
+        new InsertCommand(editor, "test1").execute();
+        new InsertCommand(editor, "test2").execute();
         editor.endRecording();
         editor.playRecording();
         editor.undo();
@@ -149,8 +161,8 @@ public class ConcreteMiniEditorTest {
     public void redoMacro() {
         MiniEditor editor = new ConcreteMiniEditor();
         editor.startRecording();
-        editor.insert("test1");
-        editor.insert("test2");
+        new InsertCommand(editor, "test1").execute();
+        new InsertCommand(editor, "test2").execute();
         editor.endRecording();
         editor.playRecording();
         assertEquals("test1test2test1test2", editor.getBuffer());
