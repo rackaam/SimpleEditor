@@ -121,4 +121,23 @@ public class CommandLineUITest {
         assertEquals("testtesttest", commandLineUI.getEditor().getBuffer());
     }
 
+    @Test
+    public void testUndo() {
+        CommandLineUI commandLineUI = new CommandLineUI();
+        commandLineUI.newInput("insert test");
+        commandLineUI.newInput("insert test2");
+        commandLineUI.newInput("undo");
+        assertEquals("test", commandLineUI.getEditor().getBuffer());
+    }
+
+    @Test
+    public void testRedo() {
+        CommandLineUI commandLineUI = new CommandLineUI();
+        commandLineUI.newInput("insert test");
+        commandLineUI.newInput("insert test2");
+        commandLineUI.newInput("undo");
+        commandLineUI.newInput("redo");
+        assertEquals("testtest2", commandLineUI.getEditor().getBuffer());
+    }
+
 }

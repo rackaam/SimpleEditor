@@ -79,8 +79,6 @@ public class CommandLineUI {
             undo();
         else if (input.matches(REDO_REGEX))
             redo();
-        printEditor();
-        waitForInput();
     }
 
     /**

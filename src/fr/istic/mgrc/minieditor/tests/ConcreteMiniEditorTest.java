@@ -106,4 +106,54 @@ public class ConcreteMiniEditorTest {
         assertEquals("azy", editor.getBuffer());
     }
 
+    @Test
+    public void testUndo() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.insert("test");
+        editor.undo();
+        assertEquals("", editor.getBuffer());
+    }
+
+    @Test
+    public void testRedo() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.insert("test");
+        editor.undo();
+        editor.redo();
+        assertEquals("test", editor.getBuffer());
+    }
+
+    @Test
+    public void insertCleansRedoStack() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.insert("test");
+        editor.undo();
+        editor.insert("1");
+        editor.redo();
+        assertEquals("1", editor.getBuffer());
+    }
+
+    @Test
+    public void undoMacro() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.startRecording();
+        editor.insert("test1");
+        editor.insert("test2");
+        editor.endRecording();
+        editor.playRecording();
+        editor.undo();
+        assertEquals("test1test2", editor.getBuffer());
+    }
+
+    @Test
+    public void redoMacro() {
+        MiniEditor editor = new ConcreteMiniEditor();
+        editor.startRecording();
+        editor.insert("test1");
+        editor.insert("test2");
+        editor.endRecording();
+        editor.playRecording();
+        assertEquals("test1test2test1test2", editor.getBuffer());
+    }
+
 }
