@@ -17,7 +17,14 @@ public class ConcreteMiniEditor implements MiniEditor {
     private Selection selection = new Selection();
     private MacroRecorder macroRecorder = new MacroRecorder();
     private EditorCaretaker caretaker = new EditorCaretaker(this);
+    /**
+     * True si une macro est en train d'être rejouée
+     */
     private boolean isPlayingMacro;
+    /**
+     * Dernière position enregistrée de la selection
+     */
+    private int lastSavedPos;
 
     public ConcreteMiniEditor() {
         caretaker.save();
@@ -57,11 +64,16 @@ public class ConcreteMiniEditor implements MiniEditor {
         if (selection.getLength() > 0) {
             delete(selection.getStart(), selection.getEnd());
         }
+        if (!isPlayingMacro && lastSavedPos != getSelection().getStart()) {
+            caretaker.save();
+        }
         buffer.insert(selection.getStart(), substring);
         int newSelectionStart = selection.getStart() + substring.length();
         selection.set(newSelectionStart, newSelectionStart);
-        if (!isPlayingMacro)
+        if (!isPlayingMacro) {
             caretaker.save();
+            lastSavedPos = selection.getStart();
+        }
         notifyObservers();
     }
 
@@ -107,6 +119,10 @@ public class ConcreteMiniEditor implements MiniEditor {
 
     @Override
     public void delete() {
+        if (!isPlayingMacro && lastSavedPos != getSelection().getStart()) {
+            caretaker.save();
+        }
+
         if (selection.getLength() == 0) {
             if (selection.getStart() > 0 && buffer.length() > 0) {
                 delete(selection.getStart() - 1, selection.getStart());
@@ -114,8 +130,10 @@ public class ConcreteMiniEditor implements MiniEditor {
         } else {
             delete(selection.getStart(), selection.getEnd());
         }
-        if (!isPlayingMacro)
+        if (!isPlayingMacro) {
             caretaker.save();
+            lastSavedPos = selection.getStart();
+        }
     }
 
     @Override

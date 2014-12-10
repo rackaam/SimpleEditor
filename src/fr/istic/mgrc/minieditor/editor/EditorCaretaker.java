@@ -14,8 +14,9 @@ public class EditorCaretaker {
 
     public void save() {
         undoStates.clear();
-        states.push(editor.saveToMemento());
-        System.out.println("^^^" + states.peek());
+        EditorMemento save = editor.saveToMemento();
+        states.push(save);
+        System.out.println(save.getBuffer().toString() + " : " + save.getSelection().getStart() + "/" + save.getSelection().getEnd());
     }
 
     public void undo() {
