@@ -84,6 +84,13 @@ public class EditorGUI extends Application implements Observer {
                         return null;
                     }
 
+                    // New line
+                    if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED && keyEvent.getCode() == KeyCode.ENTER) {
+                        Command insertCommand = new InsertCommand(editor, "\n");
+                        insertCommand.execute();
+                        return null;
+                    }
+
                     // Typed characters
                     if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && keyEvent.getCharacter() != null) {
                         if (keyEvent.getCharacter().equals("\b")) {
